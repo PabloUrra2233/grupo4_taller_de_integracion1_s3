@@ -1,0 +1,7 @@
+Nos pidieron que hagamos un diagrama de esos para mi trabajo de taller de integración 1, tenemos que hacer el PROTOTIPO de una página web en la que se pueda agendar horarios para usar las salas de estudio en el campus de la universidad católica de Temuco. el profe tambien explico que debemos usar una página llamada plantuml.com, no entiendo como funciona esa página o para que sirve
+
+pero el diagrama es demasiado basico? quiza se deban considerar un poco mas de cosas?
+
+esta sistema tiene login o registro de usuario?
+
+correcto, ahora esta listo y perfecto.
