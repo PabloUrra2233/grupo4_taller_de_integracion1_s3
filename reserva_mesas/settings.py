@@ -79,14 +79,20 @@ WSGI_APPLICATION = 'reserva_mesas.wsgi.application'
 
 # PostgreSQL Configuration
 # Asegúrate de crear un archivo .env con las credenciales de tu base de datos
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'reserva_mesas_db'),
-        'USER': os.environ.get('DB_USER', 'postgres'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '5432'),
+        'NAME': 'reserva_mesas_db',
+        'USER': 'postgres',
+        'PASSWORD': 'admin123',  # <-- Pon tu contraseña de pgAdmin aquí
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+        },
     }
 }
 
