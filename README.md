@@ -16,21 +16,57 @@ Aplicación web completa en Django para gestionar reservas de mesas en la univer
 
 - Python 3.8+
 - Django 5.2.8
-- SQLite (por defecto) o MySQL
+- PostgreSQL 12+ (recomendado) o SQLite (desarrollo)
+- psycopg2-binary (adaptador PostgreSQL)
 
 ## Instalación
 
-1. Instalar Django:
+### 1. Instalar dependencias
+
 ```bash
-python -m pip install django
+python -m pip install -r requirements.txt
 ```
 
-2. Aplicar migraciones (ya realizadas):
+### 2. Configurar Base de Datos PostgreSQL
+
+**Opción A: PostgreSQL (Producción)**
+
+1. Instalar PostgreSQL en tu sistema
+2. Crear la base de datos:
+```sql
+CREATE DATABASE reserva_mesas_db;
+CREATE USER postgres WITH PASSWORD 'tu_contraseña';
+GRANT ALL PRIVILEGES ON DATABASE reserva_mesas_db TO postgres;
+```
+
+3. Configurar variables de entorno (opcional):
+```bash
+# Copia el archivo de ejemplo
+copy .env.example .env
+
+# Edita .env con tus credenciales
+DB_NAME=reserva_mesas_db
+DB_USER=postgres
+DB_PASSWORD=tu_contraseña
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+**Opción B: SQLite (Desarrollo Local)**
+
+Si prefieres usar SQLite en lugar de PostgreSQL:
+1. Abre `reserva_mesas/settings.py`
+2. Comenta la configuración de PostgreSQL
+3. Descomenta la configuración de SQLite
+
+### 3. Aplicar migraciones
+
 ```bash
 python manage.py migrate
 ```
 
-3. Crear datos iniciales:
+### 4. Crear datos iniciales
+
 ```bash
 python manage.py crear_datos_iniciales
 ```

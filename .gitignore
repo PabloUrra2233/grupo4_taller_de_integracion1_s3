@@ -13,6 +13,9 @@ db.sqlite3-journal
 media/
 staticfiles/
 
+# Environment variables
+.env
+
 # Virtual Environment
 venv/
 env/
