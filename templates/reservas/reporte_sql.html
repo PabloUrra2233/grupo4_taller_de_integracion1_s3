@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Reporte SQL Manual</h2>
+<p>Listado de reservas obtenido mediante consulta SQL directa.</p>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Mesa</th>
+            <th>Fecha</th>
+            <th>Hora Inicio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>{{ row.0 }}</td>
+            <td>{{ row.1 }}</td>
+            <td>{{ row.2 }}</td>
+            <td>{{ row.3 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

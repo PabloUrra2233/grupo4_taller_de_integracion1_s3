@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Gestión de Mesas</h2>
+<a href="{% url 'crear_mesa' %}" class="btn btn-primary mb-3">Crear Mesa</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Capacidad</th>
+            <th>Ubicación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for mesa in mesas %}
+        <tr>
+            <td>{{ mesa.numero_mesa }}</td>
+            <td>{{ mesa.capacidad }}</td>
+            <td>{{ mesa.ubicacion }}</td>
+            <td>
+                <span class="badge {% if mesa.estado == 'disponible' %}bg-success{% else %}bg-danger{% endif %}">
+                    {{ mesa.get_estado_display }}
+                </span>
+            </td>
+            <td>
+                <a href="{% url 'editar_mesa' mesa.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'eliminar_mesa' mesa.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Logs de Acceso</h2>
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Acción</th>
+            <th>Fecha y Hora</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.usuario.username }}</td>
+            <td>
+                <span class="badge {% if log.accion == 'login' %}bg-success{% else %}bg-secondary{% endif %}">
+                    {{ log.get_accion_display }}
+                </span>
+            </td>
+            <td>{{ log.fecha_hora }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

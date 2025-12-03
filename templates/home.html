@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Bienvenido al Sistema de Reserva de Mesas</h1>
+    <p class="lead">Gestiona tus reservas de manera fácil y rápida.</p>
+    <hr class="my-4">
+    {% if not user.is_authenticated %}
+    <p>Para comenzar, inicia sesión o regístrate.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Ingresar</a>
+    <a class="btn btn-secondary btn-lg" href="{% url 'registro' %}" role="button">Registrarse</a>
+    {% else %}
+    <p>Hola {{ user.first_name }}, ¿qué deseas hacer hoy?</p>
+    <a class="btn btn-success btn-lg" href="{% url 'crear_reserva' %}" role="button">Reservar Mesa</a>
+    <a class="btn btn-info btn-lg" href="{% url 'mis_reservas' %}" role="button">Ver mis Reservas</a>
+    {% endif %}
+</div>
+{% endblock %}

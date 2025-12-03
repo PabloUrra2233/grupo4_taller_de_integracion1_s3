@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ titulo }}</h2>
+<a href="{% url 'crear_reserva' %}" class="btn btn-success mb-3">Nueva Reserva</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Mesa</th>
+            <th>Fecha</th>
+            <th>Hora Inicio</th>
+            <th>Hora Fin</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ reserva.usuario.username }}</td>
+            <td>Mesa {{ reserva.mesa.numero_mesa }}</td>
+            <td>{{ reserva.fecha_reserva }}</td>
+            <td>{{ reserva.hora_inicio }}</td>
+            <td>{{ reserva.hora_fin }}</td>
+            <td>
+                <a href="{% url 'editar_reserva' reserva.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'eliminar_reserva' reserva.pk %}" class="btn btn-sm btn-danger">Cancelar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No hay reservas registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
