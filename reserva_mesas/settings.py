@@ -86,7 +86,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'reserva_mesas_db',
-        'USER': 'postgres',
+        'USER': 'reserva_user',
         'PASSWORD': 'admin123',  # <-- Pon tu contraseña de pgAdmin aquí
         'HOST': 'localhost',
         'PORT': '5432',
