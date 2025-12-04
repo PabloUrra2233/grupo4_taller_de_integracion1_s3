@@ -1,16 +1,16 @@
 from django.contrib import admin
-from .models import Mesa
-from reservas.models import Reserva
+from .models import Sala, Mesa
 
-class ReservaInline(admin.TabularInline):
-    model = Reserva
-    extra = 0
-    readonly_fields = ('usuario', 'fecha_reserva', 'hora_inicio', 'hora_fin')
-    can_delete = False
+
+@admin.register(Sala)
+class SalaAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "ubicacion", "activa")
+    list_filter = ("activa",)
+    search_fields = ("nombre", "ubicacion")
+
 
 @admin.register(Mesa)
 class MesaAdmin(admin.ModelAdmin):
-    list_display = ('numero_mesa', 'capacidad', 'ubicacion', 'estado')
-    list_filter = ('estado', 'capacidad')
-    search_fields = ('ubicacion',)
-    inlines = [ReservaInline]
+    list_display = ("sala", "numero_mesa", "capacidad", "activa")
+    list_filter = ("sala", "activa")
+    search_fields = ("sala__nombre",)

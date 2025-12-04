@@ -5,6 +5,8 @@ from django.contrib import messages
 from .models import Reserva
 from .forms import ReservaForm
 from usuarios.models import Usuario
+from mesas.models import Mesa
+from reservas.models import BloqueHorario
 
 @login_required
 def mis_reservas(request):
@@ -18,19 +20,27 @@ def todas_reservas(request):
     reservas = Reserva.objects.all().select_related('usuario', 'mesa').order_by('-fecha_reserva')
     return render(request, 'reservas/lista.html', {'reservas': reservas, 'titulo': 'Todas las Reservas'})
 
+
 @login_required
 def crear_reserva(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ReservaForm(request.POST)
         if form.is_valid():
             reserva = form.save(commit=False)
             reserva.usuario = request.user
             reserva.save()
-            messages.success(request, 'Reserva creada exitosamente.')
-            return redirect('mis_reservas')
+            return redirect("reservas_lista")
     else:
         form = ReservaForm()
-    return render(request, 'reservas/form.html', {'form': form, 'titulo': 'Nueva Reserva'})
+
+    mesas = Mesa.objects.filter(activa=True)
+    bloques = BloqueHorario.objects.all()
+
+    return render(request, "reservas/form.html", {
+        "form": form,
+        "mesas": mesas,
+        "bloques": bloques,
+    })
 
 @login_required
 def editar_reserva(request, pk):
