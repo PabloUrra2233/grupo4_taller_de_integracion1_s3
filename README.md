@@ -16,8 +16,8 @@ Aplicación web completa en Django para gestionar reservas de mesas en la univer
 
 - Python 3.8+
 - Django 5.2.8
-- PostgreSQL 12+ (recomendado) o SQLite (desarrollo)
-- psycopg2-binary (adaptador PostgreSQL)
+- MySQL 8+ (recomendado) o SQLite (desarrollo)
+- mysqlclient (adaptador MySQL)
 
 ## Instalación
 
@@ -27,17 +27,23 @@ Aplicación web completa en Django para gestionar reservas de mesas en la univer
 python -m pip install -r requirements.txt
 ```
 
-### 2. Configurar Base de Datos PostgreSQL
+### 2. Configurar Base de Datos MySQL
 
-**Opción A: PostgreSQL (Producción)**
+**Opción A: MySQL (Producción)**
 
-1. Instalar PostgreSQL en tu sistema
-2. Crear la base de datos:
+1. Instalar MySQL en tu sistema
+2. Crear la base de datos y el usuario (si tu perfil lo permite):
 ```sql
-CREATE DATABASE reserva_mesas_db;
-CREATE USER postgres WITH PASSWORD 'tu_contraseña';
-GRANT ALL PRIVILEGES ON DATABASE reserva_mesas_db TO postgres;
+CREATE DATABASE reserva_mesas_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'reserva_user'@'%' IDENTIFIED BY 'tu_contraseña';
+GRANT ALL PRIVILEGES ON reserva_mesas_db.* TO 'reserva_user'@'%';
+FLUSH PRIVILEGES;
 ```
+
+   > **Si ya tienes una base asignada y no puedes crear otra (por ejemplo `A2025_purra`):**
+   > - No necesitas ejecutar `CREATE DATABASE` ni crear otro usuario.
+   > - Solo asegúrate de que tu usuario MySQL tenga permisos de lectura/escritura en esa base.
+   > - Configura `DB_NAME=A2025_purra` (o el nombre de tu base existente) y usa tus propias credenciales en los pasos siguientes. Las migraciones de Django crearán todas las tablas allí.
 
 3. Configurar variables de entorno (opcional):
 ```bash
@@ -45,11 +51,11 @@ GRANT ALL PRIVILEGES ON DATABASE reserva_mesas_db TO postgres;
 copy .env.example .env
 
 # Edita .env con tus credenciales
-DB_NAME=reserva_mesas_db
-DB_USER=postgres
+DB_NAME=reserva_mesas_db   # cámbialo a A2025_purra si usas tu base asignada
+DB_USER=reserva_user       # o tu usuario existente
 DB_PASSWORD=tu_contraseña
 DB_HOST=localhost
-DB_PORT=5432
+DB_PORT=3306
 ```
 
 **Opción B: SQLite (Desarrollo Local)**

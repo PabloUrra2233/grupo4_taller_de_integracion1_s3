@@ -1,18 +1,150 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="jumbotron text-center">
-    <h1 class="display-4">Bienvenido al Sistema de Reserva de Mesas</h1>
-    <p class="lead">Gestiona tus reservas de manera fácil y rápida.</p>
-    <hr class="my-4">
-    {% if not user.is_authenticated %}
-    <p>Para comenzar, inicia sesión o regístrate.</p>
-    <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Ingresar</a>
-    <a class="btn btn-secondary btn-lg" href="{% url 'registro' %}" role="button">Registrarse</a>
-    {% else %}
-    <p>Hola {{ user.first_name }}, ¿qué deseas hacer hoy?</p>
-    <a class="btn btn-success btn-lg" href="{% url 'crear_reserva' %}" role="button">Reservar Mesa</a>
-    <a class="btn btn-info btn-lg" href="{% url 'mis_reservas' %}" role="button">Ver mis Reservas</a>
-    {% endif %}
-</div>
+<section class="hero shadow-sm">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+            <span class="badge bg-light text-primary fw-semibold mb-3">Sistema integrado con MySQL y Django</span>
+            <h1 class="display-5 fw-bold">Reserva salas y mesas sin esperas</h1>
+            <p class="lead text-muted">Administra usuarios, mesas y horarios en un entorno conectado a base de datos MySQL, todo desde una interfaz moderna y responsiva.</p>
+            <div class="d-flex flex-wrap gap-3">
+                {% if not user.is_authenticated %}
+                    <a class="btn btn-primary btn-lg" href="{% url 'login' %}">Ingresar</a>
+                    <a class="btn btn-outline-light btn-lg" href="{% url 'registro' %}">Registrarse</a>
+                {% else %}
+                    <a class="btn btn-success btn-lg" href="{% url 'crear_reserva' %}">Reservar ahora</a>
+                    <a class="btn btn-outline-light btn-lg" href="{% url 'mis_reservas' %}">Ver mis reservas</a>
+                {% endif %}
+            </div>
+            <div class="d-flex gap-4 align-items-center mt-4 stats">
+                <div>
+                    <p class="h2 mb-0">100%</p>
+                    <small class="text-muted">Disponibilidad en tiempo real</small>
+                </div>
+                <div>
+                    <p class="h2 mb-0">24/7</p>
+                    <small class="text-muted">Gestión online</small>
+                </div>
+                <div>
+                    <p class="h2 mb-0">3 roles</p>
+                    <small class="text-muted">Admin, alumno, funcionario</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card feature-card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title mb-0">Resumen de la plataforma</h5>
+                        <span class="badge bg-primary-subtle text-primary">SQL + ORM</span>
+                    </div>
+                    <ul class="list-unstyled mb-0">
+                        <li class="d-flex align-items-start mb-3">
+                            <div class="icon-circle text-primary me-3">DB</div>
+                            <div>
+                                <p class="fw-semibold mb-1">Conectado a MySQL</p>
+                                <small class="text-muted">El motor usa `mysqlclient` y variables de entorno para credenciales.</small>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start mb-3">
+                            <div class="icon-circle text-success me-3">UX</div>
+                            <div>
+                                <p class="fw-semibold mb-1">Frontend HTML + CSS</p>
+                                <small class="text-muted">Plantilla responsiva con botones claros para reservar o administrar.</small>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start">
+                            <div class="icon-circle text-info me-3">DJ</div>
+                            <div>
+                                <p class="fw-semibold mb-1">Django listo para roles</p>
+                                <small class="text-muted">Autenticación y permisos para administrar usuarios, salas y bitácoras.</small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Flujo rápido</h5>
+                    <p class="card-text">Selecciona sala, fecha y bloque horario con validación automática para evitar solapamientos.</p>
+                    <span class="badge bg-primary">Reservas</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Panel administrativo</h5>
+                    <p class="card-text">Gestiona usuarios, mesas y logs de accesos desde la misma interfaz web basada en Django.</p>
+                    <span class="badge bg-success">Administración</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Reportes SQL</h5>
+                    <p class="card-text">Consulta disponibilidad y uso de salas con reportes directos en SQL y soporte ORM.</p>
+                    <span class="badge bg-info text-dark">Datos</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-5">
+    <div class="card border-0 bg-light">
+        <div class="card-body">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-7">
+                    <h4 class="mb-3">Pasos para reservar</h4>
+                    <ol class="timeline">
+                        <li>
+                            <h6 class="fw-semibold mb-1">Inicia sesión o regístrate</h6>
+                            <p class="text-muted mb-2">Accede con tu correo institucional y recibe el rol correspondiente.</p>
+                        </li>
+                        <li>
+                            <h6 class="fw-semibold mb-1">Elige sala y bloque</h6>
+                            <p class="text-muted mb-2">Busca por campus, sede o tipo de sala según el diagrama de datos.</p>
+                        </li>
+                        <li>
+                            <h6 class="fw-semibold mb-1">Confirma y administra</h6>
+                            <p class="text-muted mb-0">Revisa tus reservas, modifica horarios y consulta el historial.</p>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-md-5">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h6 class="fw-semibold mb-3">Entidades clave</h6>
+                            <div class="d-flex justify-content-between text-muted mb-2">
+                                <span>Usuario</span>
+                                <span>Roles y datos personales</span>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted mb-2">
+                                <span>Sala / Mesa</span>
+                                <span>Capacidad, ubicación y estado</span>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted mb-2">
+                                <span>Reserva</span>
+                                <span>Fecha, bloque horario y actor</span>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted">
+                                <span>Disponibilidad</span>
+                                <span>Validación de solapamientos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
