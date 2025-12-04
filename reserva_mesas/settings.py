@@ -82,19 +82,35 @@ WSGI_APPLICATION = 'reserva_mesas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
+
+# Database - Modo simple y funcional con SQLite
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'reserva_mesas_db',
-        'USER': 'reserva_user',
-        'PASSWORD': 'admin123',  # <-- Pon tu contraseña de pgAdmin aquí
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+'''
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST", "localhost"),
+        'PORT': os.getenv("DB_PORT", "3306"),
         'OPTIONS': {
-            'client_encoding': 'UTF8',
+            'charset': 'utf8mb4',
         },
     }
 }
+'''
 
 # Si prefieres usar SQLite para desarrollo local, descomenta estas líneas y comenta las de arriba:
 # DATABASES = {
