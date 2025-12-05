@@ -25,6 +25,19 @@ def todas_reservas(request):
 def crear_reserva(request):
     if request.method == "POST":
         form = ReservaForm(request.POST)
+        accion = request.POST.get('accion')
+        if accion == "disponibilidad":
+        # Solo mostrar horas ocupadas, NO validar, NO guardar
+            if form.is_valid():
+                sala = form.cleaned_data.get("mesa")
+                fecha = form.cleaned_data.get("fecha")
+                horas_ocupadas = Reserva.objects.filter(mesa=sala, fecha=fecha)
+                return render(request, "reservas/form.html", {
+                    "form": form,
+                    "horas_ocupadas": horas_ocupadas,
+                    "titulo": "Nueva Reserva"
+                })
+
         if form.is_valid():
             reserva = form.save(commit=False)
             reserva.usuario = request.user
@@ -42,6 +55,15 @@ def crear_reserva(request):
         "bloques": bloques,
     })
 
+    return render(
+        request,
+        "reservas/form.html",
+        {
+            "form": form,
+            "reservas_ocupadas": reservas_ocupadas,
+            "titulo": "Nueva Reserva",
+        }
+    )
 @login_required
 def editar_reserva(request, pk):
     reserva = get_object_or_404(Reserva, pk=pk)

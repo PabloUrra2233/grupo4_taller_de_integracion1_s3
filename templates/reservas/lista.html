@@ -7,9 +7,9 @@
     <thead>
         <tr>
             <th>Usuario</th>
-            <th>Mesa</th>
+            <th>Sala</th>
             <th>Fecha</th>
-            <th>Hora Inicio</th>
+            <th>Hora Inicio (mínimo 08:30)</th>
             <th>Hora Fin</th>
             <th>Acciones</th>
         </tr>
@@ -18,7 +18,7 @@
         {% for reserva in reservas %}
         <tr>
             <td>{{ reserva.usuario.username }}</td>
-            <td>Mesa {{ reserva.mesa.numero_mesa }}</td>
+            <td>Sala {{ reserva.mesa.numero_mesa }}</td>
             <td>{{ reserva.fecha_reserva }}</td>
             <td>{{ reserva.hora_inicio }}</td>
             <td>{{ reserva.hora_fin }}</td>
