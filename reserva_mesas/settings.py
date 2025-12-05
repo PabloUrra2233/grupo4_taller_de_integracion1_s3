@@ -84,17 +84,11 @@ WSGI_APPLICATION = 'reserva_mesas.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'reserva_mesas_db',
-        'USER': 'reserva_user',
-        'PASSWORD': 'admin123',  # <-- Pon tu contraseña de pgAdmin aquí
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'OPTIONS': {
-            'client_encoding': 'UTF8',
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 # Si prefieres usar SQLite para desarrollo local, descomenta estas líneas y comenta las de arriba:
 # DATABASES = {

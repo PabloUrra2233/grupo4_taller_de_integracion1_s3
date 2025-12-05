@@ -6,6 +6,17 @@
         <div class="card">
             <div class="card-header">{{ titulo }}</div>
             <div class="card-body">
+                <div class="alert alert-info">
+                    <strong>Condiciones del Servicio:</strong>
+                    <ul class="mb-0">
+                        <li>Solo se puede reservar de <strong>lunes a viernes</strong>.</li>
+                        <li>Las reservas deben hacerse con un máximo de <strong>7 días de anticipación</strong>.</li>
+                        <li>Horario permitido: entre <strong>08:00</strong> y <strong>19:00</strong>.</li>
+                        <li>Cada usuario puede realizar <strong>1 reserva por día</strong>.</li>
+                        <li>Cada usuario puede realizar un máximo de <strong>3 reservas por semana</strong>.</li>
+                    </ul>
+                </div>
+
                 <form method="post">
                     {% csrf_token %}
                     {% for field in form %}
@@ -19,6 +30,48 @@
                     {% endfor %}
                     <button type="submit" class="btn btn-primary">Guardar Reserva</button>
                     <a href="{% url 'mis_reservas' %}" class="btn btn-secondary">Cancelar</a>
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div id="info-horarios" class="mt-3"></div>
+
+                    <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const mesaField = document.getElementById("id_mesa");
+                        const fechaField = document.getElementById("id_fecha_reserva");
+                        const infoDiv = document.getElementById("info-horarios");
+
+                        function actualizarDisponibilidad() {
+                            const mesa = mesaField.value;
+                            const fecha = fechaField.value;
+
+                            if (mesa && fecha) {
+                                fetch(`/horarios/?mesa_id=${mesa}&fecha=${fecha}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.length === 0) {
+                                            infoDiv.innerHTML = "<span class='text-success'>La mesa está disponible todo el día.</span>";
+                                        } else {
+                                            let html = "<strong>Horarios reservados:</strong><ul>";
+                                            data.forEach(r => {
+                                                html += `<li>${r.hora_inicio} → ${r.hora_fin}</li>`;
+                                            });
+                                            html += "</ul>";
+                                            infoDiv.innerHTML = html;
+                                        }
+                                    });
+                            }
+                        }
+
+                        mesaField.addEventListener("change", actualizarDisponibilidad);
+                        fechaField.addEventListener("change", actualizarDisponibilidad);
+                    });
+                    </script>
+
                 </form>
             </div>
         </div>
