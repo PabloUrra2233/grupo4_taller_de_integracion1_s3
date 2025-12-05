@@ -114,6 +114,7 @@ DATABASES = {
 }
 '''
 
+
 # Si prefieres usar SQLite para desarrollo local, descomenta estas líneas y comenta las de arriba:
 # DATABASES = {
 #     'default': {
