@@ -13,12 +13,10 @@ def registro(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Autenticar al usuario para establecer el atributo backend
-            password = form.cleaned_data.get('password1')
-            authenticated_user = authenticate(request, username=user.email, password=password)
-            if authenticated_user is not None:
-                login(request, authenticated_user)
-                return redirect('home')
+            # Establecer manualmente el backend en el usuario
+            user.backend = 'usuarios.backends.EmailBackend'
+            login(request, user)
+            return redirect('home')
     else:
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})
