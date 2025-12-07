@@ -146,3 +146,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'usuarios.Usuario'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
+
+# Backend de autenticación personalizado para permitir login con email
+AUTHENTICATION_BACKENDS = [
+    'usuarios.backends.EmailBackend',  # Permite login con email o username
+    'django.contrib.auth.backends.ModelBackend',  # Fallback al backend por defecto
+]
