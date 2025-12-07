@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import RegistroForm, UsuarioCreationForm, UsuarioChangeForm
 from .models import Usuario
+
 
 def is_admin(user):
     return user.is_authenticated and user.rol == Usuario.Rol.ADMIN
@@ -12,8 +13,12 @@ def registro(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('home')
+            # Autenticar al usuario para establecer el atributo backend
+            password = form.cleaned_data.get('password1')
+            authenticated_user = authenticate(request, username=user.email, password=password)
+            if authenticated_user is not None:
+                login(request, authenticated_user)
+                return redirect('home')
     else:
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})

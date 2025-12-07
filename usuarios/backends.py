@@ -28,3 +28,12 @@ class EmailBackend(ModelBackend):
             return user
         
         return None
+    
+    def get_user(self, user_id):
+        """
+        Método requerido para recuperar un usuario por su ID
+        """
+        try:
+            return Usuario.objects.get(pk=user_id)
+        except Usuario.DoesNotExist:
+            return None
