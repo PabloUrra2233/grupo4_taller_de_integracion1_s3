@@ -5,7 +5,6 @@ class Usuario(AbstractUser):
     class Rol(models.TextChoices):
         ADMIN = 'admin', 'Administrador'
         ALUMNO = 'alumno', 'Alumno'
-        FUNCIONARIO = 'funcionario', 'Funcionario'
 
     rol = models.CharField(max_length=20, choices=Rol.choices, default=Rol.ALUMNO)
     email = models.EmailField(unique=True)
